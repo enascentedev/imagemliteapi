@@ -1,0 +1,66 @@
+## ----- ----- -----
+
+
+-- ----- ----- -----
+Criando end-point para o recebimento das imagens
+
+-- ----- ----- -----
+
+Criando Stack do PostgreSQL no docker Compose 
+-- ----- ----- -----
+
+Conectando a API com o Banco de Dados
+
+Para configurar a conexão com o banco de dados no projeto Spring, siga os passos abaixo:
+
+No diretório do projeto, navegue até src/main/resources.
+Renomeie o arquivo existente para application.yml, se ainda não estiver com esse nome.
+Exclua os diretórios static e templates que estão dentro de src/main/resources, caso não estejam sendo utilizados.
+Certifique-se de que o arquivo application.yml contenha as configurações de datasource necessárias para conectar-se ao banco de dados PostgreSQL.
+Abaixo está um exemplo de como configurar o arquivo application.yml:
+
+yaml
+Copy code
+spring:
+  datasource:
+    # URL de conexão com o banco de dados, onde 'localhost' é o endereço do servidor do banco de dados,
+    # '5432' é a porta padrão do PostgreSQL, e 'imageliteapi' é o nome do banco de dados.
+    url: jdbc:postgresql://localhost:5432/imageliteapi
+    
+    # Nome de usuário e senha para conexão com o banco de dados.
+    username: postgres
+    password: postgres
+    
+  # Configurações específicas do JPA para o uso com PostgreSQL.
+  jpa:
+    database: POSTGRESQL
+    
+    # Hibernate:
+    # ddl-auto: 'update' permite que o Hibernate atualize automaticamente o esquema do banco de dados.
+    hibernate:
+      ddl-auto: update
+      
+    # show-sql: 'true' faz com que o SQL gerado pelo Hibernate seja exibido no console.
+    show-sql: true
+Estas configurações são críticas para garantir que a aplicação possa se comunicar corretamente com o banco de dados. Lembre-se de alterar os valores de username e password para corresponder às credenciais do seu ambiente de banco de dados. Além disso, é recomendável não armazenar credenciais de produção no controle de versão.
+-- ----- ----- -----
+Mapeamento JPA para a entidade Image:
+
+A entidade Image representa uma imagem dentro de uma aplicação Java e é mapeada para um banco de dados usando a especificação JPA (Java Persistence API). Utiliza-se a biblioteca Lombok para reduzir o boilerplate com anotações como @Data, @NoArgsConstructor, e @AllArgsConstructor para gerar automaticamente métodos getters, setters, construtores sem argumentos, e construtores com todos os argumentos, respectivamente. A anotação @Builder é usada para proporcionar um padrão de construção para objetos Image.
+
+A classe Image é marcada com @Entity indicando que ela é uma entidade JPA, e com @Table para especificar que esta entidade será mapeada para uma tabela no banco de dados. A auditoria é habilitada através da anotação @EntityListeners(AuditingEntityListener.class), o que permite que certos campos sejam automaticamente preenchidos pelo Spring Data.
+
+Os atributos da entidade Image incluem:
+
+id: Identificador único da imagem, gerado automaticamente com a estratégia UUID.
+name: Nome da imagem.
+size: Tamanho do arquivo da imagem em bytes.
+extension: Extensão do arquivo da imagem, mapeada como uma enumeração e armazenada como uma String.
+uploadDate: Data e hora do upload da imagem, automaticamente gerenciada pelo Spring Data com @CreatedDate.
+tags: Tags associadas à imagem para busca e classificação.
+file: Conteúdo binário da imagem, armazenado como um grande objeto binário (LOB).
+Essa entidade está preparada para ser utilizada em um contexto de aplicação Spring com JPA, aproveitando recursos de automação e auditoria para facilitar a manipulação e persistência dos dados associados às imagens.
+
+-- ----- ----- -----
+-- ----- ----- ----- ##
+
