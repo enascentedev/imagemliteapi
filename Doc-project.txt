@@ -61,6 +61,13 @@ tags: Tags associadas à imagem para busca e classificação.
 file: Conteúdo binário da imagem, armazenado como um grande objeto binário (LOB).
 Essa entidade está preparada para ser utilizada em um contexto de aplicação Spring com JPA, aproveitando recursos de automação e auditoria para facilitar a manipulação e persistência dos dados associados às imagens.
 
+imagem do docker não esta subindo direto pelo intellij então devo abrir o documento docker-compose.yml pelo terminal e digitar o comando:docker-compose up
+depois verificar se container esta rodando:docker container ls
+ 
+
 -- ----- ----- -----
+Criando a tabela e o repositório de imagens
+
+
 -- ----- ----- ----- ##
 
